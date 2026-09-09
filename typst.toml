@@ -1,0 +1,16 @@
+[package]
+name = "touying-campus-talk"
+version = "0.1.0"
+entrypoint = "lib.typ"
+authors = ["Ri-Nai <https://github.com/Ri-Nai>"]
+license = "MIT"
+description = "Campus talk Touying theme with school-color presets (THU / BIT / custom)"
+repository = "https://github.com/Ri-Nai/touying-campus-talk"
+keywords = ["touying", "slides", "theme", "campus", "university", "清华", "北理工"]
+categories = ["presentation"]
+disciplines = ["computer-science", "education"]
+compiler = "0.12.0"
+
+[template]
+path = "."
+entrypoint = "main.typ"
