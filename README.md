@@ -4,6 +4,17 @@
 
 校徽与校色仅供个人汇报参考，版权归各高校所有。
 
+<p align="center">
+  <img src="docs/imgs/thu-title.png" width="32%" alt="THU title" />
+  <img src="docs/imgs/bit-title.png" width="32%" alt="BIT title" />
+  <img src="docs/imgs/zju-title.png" width="32%" alt="ZJU title" />
+</p>
+
+<p align="center">
+  <img src="docs/imgs/thu-content.png" width="48%" alt="THU content" />
+  <img src="docs/imgs/zju-content.png" width="48%" alt="ZJU content" />
+</p>
+
 ## 结构
 
 ```text
@@ -19,6 +30,7 @@ touying-campus-talk/
 │   ├── thu.typ          # 清华（含校色常量 / 校徽）
 │   └── bit.typ          # 北理工（含校色常量 / 校徽）
 ├── assets/
+├── docs/imgs/           # README 预览图
 └── samples/
     ├── thu.typ          # themes.thu
     ├── bit.typ          # themes.bit
@@ -74,9 +86,25 @@ ln -s "$(pwd)" ~/Library/Application\ Support/typst/packages/local/touying-campu
 
 校色常量写在对应 `themes/thu.typ`、`themes/bit.typ` 里，不放内核。
 
+### THU
+
+![THU title](docs/imgs/thu-title.png)
+
+### BIT
+
+![BIT title](docs/imgs/bit-title.png)
+
+### Campus 自定义（ZJU 配色示例）
+
+![ZJU title](docs/imgs/zju-title.png)
+
 ## 自定义主题
 
 多数学校**不必**新建 `themes/xxx.typ`：用 `themes.campus`，在 deck 里传配色 / 校名 / 校徽即可。完整示例见 [`samples/zju.typ`](samples/zju.typ)。
+
+只改 `primary` / `brand` 就能换成另一所学校的观感（下图为浙大蓝示例的内容页）：
+
+![ZJU content](docs/imgs/zju-content.png)
 
 ### 最小改法（只换主色 + 校名）
 
@@ -153,6 +181,14 @@ ln -s "$(pwd)" ~/Library/Application\ Support/typst/packages/local/touying-campu
 typst compile --root . samples/thu.typ
 typst compile --root . samples/bit.typ
 typst compile --root . samples/zju.typ   # campus 自定义配色示例
+```
+
+预览图可从 PDF 导出（需 `pdftoppm`）：
+
+```bash
+mkdir -p docs/imgs
+typst compile --root . samples/thu.typ /tmp/thu.pdf
+pdftoppm -png -r 144 -f 1 -l 3 /tmp/thu.pdf docs/imgs/thu-preview
 ```
 
 ## 依赖

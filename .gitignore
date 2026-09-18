@@ -1,4 +1,4 @@
 .DS_Store
 *.pdf
 *.pdfpc
-docs/imgs/
+docs/imgs/*.pdf
