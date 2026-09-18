@@ -74,17 +74,70 @@ ln -s "$(pwd)" ~/Library/Application\ Support/typst/packages/local/touying-campu
 
 校色常量写在对应 `themes/thu.typ`、`themes/bit.typ` 里，不放内核。
 
-自定义学校（不必新建 `themes/*.typ`），见 `samples/zju.typ`：
+## 自定义主题
+
+多数学校**不必**新建 `themes/xxx.typ`：用 `themes.campus`，在 deck 里传配色 / 校名 / 校徽即可。完整示例见 [`samples/zju.typ`](samples/zju.typ)。
+
+### 最小改法（只换主色 + 校名）
 
 ```typ
+#import "@local/touying-campus-talk:0.1.0": *
 #import themes.campus: *
 
 #show: campus-theme.with(
   theme-colors: campus-talk-colors(primary: rgb("#003F88")),
   brand: [浙江大学],
-  config-info(title: [汇报], author: [姓名], institution: [单位], date: datetime.today()),
+  config-info(
+    title: [Title],
+    subtitle: [Subtitle],
+    author: [Authors],
+    institution: [Institution],
+    date: datetime.today(),
+  ),
 )
 ```
+
+只传 `primary` 时，其余色阶（亮/浅/暗、进度条等）会自动派生。
+
+### 常用参数
+
+| 参数 | 作用 |
+|------|------|
+| `theme-colors` | `campus-talk-colors(...)`：主色、强调色、进度条色等 |
+| `theme-fonts` | `campus-talk-fonts(...)`：正文字体 / 标题字体 / 字号 |
+| `brand` | 顶栏校名文案 |
+| `emblem` | 校徽，传 `image("xxx.svg", width: 3.6cm)` 或路径字符串 |
+| `emblem-width` | 校徽宽度，默认 `3.6cm` |
+| `config-info(...)` | 标题、作者、单位、日期等（封面与页脚会用到） |
+
+颜色细调示例：
+
+```typ
+#let zju-blue = rgb("#003F88")
+#let zju-red = rgb("#B01F24")
+
+#show: campus-theme.with(
+  theme-colors: campus-talk-colors(
+    primary: zju-blue,
+    highlight: zju-red,           // 强调色可与主色分离
+    // progress-fill: ...,        // 进度条填充（默认跟主色亮阶）
+    // progress-track: ...,       // 进度条底轨
+  ),
+  theme-fonts: campus-talk-fonts(body-size: 17pt),
+  brand: [浙江大学],
+  // emblem: image("zju-emblem.svg", width: 3.6cm),
+  config-info(...),
+)
+```
+
+`campus-talk-colors` 还可显式覆盖：`primary-light` / `primary-lighter` / `primary-lightest` / `primary-dark` / `primary-darker`、`title-color` 等。
+
+### 什么时候才新建 `themes/xxx.typ`
+
+- 同一套校色 / 校徽要在多份 deck 复用
+- 想写成 `#import themes.foo: *` + `#show: foo-theme.with(...)` 的固定入口
+
+可对照 `themes/thu.typ`：在文件里定好默认 `theme-colors` / `brand` / `emblem`，再包一层 `campus-talk-theme`。颜色简单、只用一次时，继续用上面的 `campus-theme` 内联写法即可。
 
 ## 内置页面
 
